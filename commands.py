@@ -12,7 +12,7 @@ def add_user(database, user):
     connection.close()
 
 
-def get_name(database, memberId):
+def get_firstname(database, memberId):
     query = "SELECT first_name FROM user WHERE memberId=?"
     connection = sq.connect(database)
     cursor = connection.cursor()
@@ -21,7 +21,6 @@ def get_name(database, memberId):
     connection.close()
 
     return  rows[0][0]
-
 
 # update by memberId
 def change_firstname(database, new_name, memberId):
@@ -149,7 +148,64 @@ def get_information(database):
 
     return result
 
+def get_lastname(database, memberId){
+    query = "SELECT last_name FROM user WHERE memberId=?"
+    connection = sq.connect(database)
+    cursor = connection.cursor()
+    cursor.execute(query, [memberId])
+    rows = cursor.fetchall()
+    connection.close()
+
+    return  rows[0][0]
+}
+
+def get_address(database, memberId){
+    query = "SELECT address FROM user WHERE memberId=?"
+    connection = sq.connect(database)
+    cursor = connection.cursor()
+    cursor.execute(query, [memberId])
+    rows = cursor.fetchall()
+    connection.close()
+
+    return  rows[0][0]
+}
+
+def get_username(database, memberId){
+    query = "SELECT username FROM user WHERE memberId=?"
+    connection = sq.connect(database)
+    cursor = connection.cursor()
+    cursor.execute(query, [memberId])
+    rows = cursor.fetchall()
+    connection.close()
+
+    return  rows[0][0]
+}
+
+def get_phonenumber(database, memberId){
+    query = "SELECT phone_number FROM user WHERE memberId=?"
+    connection = sq.connect(database)
+    cursor = connection.cursor()
+    cursor.execute(query, [memberId])
+    rows = cursor.fetchall()
+    connection.close()
+
+    return  rows[0][0]
+}
+
+def get_age(database, memberId){
+    query = "SELECT age FROM user WHERE memberId=?"
+    connection = sq.connect(database)
+    cursor = connection.cursor()
+    cursor.execute(query, [memberId])
+    rows = cursor.fetchall()
+    connection.close()
+
+    return  rows[0][0]
+}
 
 if __name__ == "__main__":
 
     r = get_information('Database/database.db')
+
+    for e in r:
+        print(e)

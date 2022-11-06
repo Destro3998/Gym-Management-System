@@ -18,19 +18,18 @@ if __name__ == "__main__":
     cur = conn.cursor()
 
     # user (firstname, lastname, email age, phone_number
-    #        username, join_date, end_of membership, member_id)
+    #        username, join_date, end_of membership, password)
     # cur.execute("""CREATE TABLE user (first_name text,\
     #                last_name text,\
-    #                email text,\
     #                age integer, \
     #                address text, \
     #                phone_number integer,\
-    #                memberID integer, username text)""")
-    #
+    #                username text, password text,\
+    #                memberId integer)""")
+
     # add_users = [
-    #             ('Elle', 'James', 'jamesee@yahoo.com', 19, '221 Summer Blvd', 306873324, 11200, 'jam322'),
-    #             ('Emily', 'geller', 'gelleremm@gmail.com', 30, '310 Fall Ave', 3061432134, 11100, 'gee000')
-    # ]
+    #             ('Elle', 'James', 19, '221 Summer Blvd', 306873324, 'jam322', 'Software370', '01'),
+    #             ('Emily', 'geller', 30, '310 Fall Ave', 3061432134, 'gee000', "software370", '02')]
     # cur.executemany("""INSERT INTO user VALUES(?, ?, ?, ?, ?, ?, ?, ?)""", add_users)
 
     cur.execute("SELECT * FROM user")

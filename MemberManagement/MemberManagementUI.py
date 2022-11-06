@@ -43,12 +43,26 @@ class MemberManagementUI(tk.Frame):
         l_email.grid(row=3, column=0, pady=10)
         l_number.grid(row=4, column=0, pady=10)
         l_address.grid(row=5, column=0, pady=10)
+<<<<<<< HEAD
 
+=======
+<<<<<<< HEAD
+=======
+
+>>>>>>> GymBookings
+>>>>>>> master
         first_name.grid(row=1, column=1, padx=5)
         last_name.grid(row=2, column=1, padx=5)
         email.grid(row=3, column=1, padx=5)
         number.grid(row=4, column=1, padx=5)
         address.grid(row=5, column=1, padx=5)
+<<<<<<< HEAD
 
+=======
+<<<<<<< HEAD
+=======
+
+>>>>>>> GymBookings
+>>>>>>> master
         create.grid(row=6, column=0, columnspan=2, pady=15)
 

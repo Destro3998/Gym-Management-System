@@ -1,5 +1,9 @@
+from abc import ABC
 
-class firstName:
+from userDBInterface import userDb
+
+
+class firstName(userDb, ABC):
 
     def __init__(self):
 
@@ -16,7 +20,7 @@ class firstName:
         return self.firstname
 
 
-class lastName:
+class lastName(userDb, ABC):
 
     def __init__(self):
 
@@ -29,7 +33,7 @@ class lastName:
         return self.lastname
 
 
-class preferredName:
+class preferredName(userDb, ABC):
 
     def __init__(self):
         self.preferredname = ""
@@ -74,7 +78,7 @@ class fullname:
         return self.fullname
 
 
-class Address:
+class Address(userDb, ABC):
 
     def __init__(self):
         self.address = ""
@@ -115,10 +119,10 @@ class Information:
     def set_membershipPlan(self, plan):
         self.Information['membership plan'] = plan
 
-    def set_age(self, age: Age):
+    def set_age(self, age:Age):
         self.Information['age'] = age
 
-    def set_address(self, address: Address):
+    def set_address(self, address:Address):
         self.Information['address'] = address
 
     def get_username(self):
@@ -145,10 +149,10 @@ class UserProfile:
     def __init__(self, fullName: fullname, information: Information):
         """
 
-        :param fullName: The user's full name
-        :param address: The user's address
-        :param information: a list of user information
-        :param age: the user's age
+        :param fullName:
+        :param address:
+        :param information:
+        :param age:
         """
 
         self.uprofile = {

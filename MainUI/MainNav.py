@@ -10,10 +10,9 @@ different key users will have different functionality (admin, customers)
 # Imports for different page navigation's
 
 from MemberManagement.MemberManagementUI import MemberManagementUI
-<<<<<<< HEAD
-=======
+
 from GymBookings.GymBookingsUI import GymBookingsUI
->>>>>>> GymBookings
+
 
 
 class MainNav(tk.Frame):
@@ -25,10 +24,9 @@ class MainNav(tk.Frame):
         # new member button to navigate to the page to add a new member
         new_member = tk.Button(self, text="New Member", command=lambda: root.change_page(MemberManagementUI))
         new_member.pack()
-<<<<<<< HEAD
-=======
+
 
         # gym bookings button to navigate to the page to add a new member
         new_booking = tk.Button(self, text="Class Sign Up", command=lambda: root.change_page(GymBookingsUI))
         new_booking.pack()
->>>>>>> GymBookings
+

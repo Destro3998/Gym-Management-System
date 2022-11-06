@@ -148,7 +148,7 @@ def get_information(database):
 
     return result
 
-def get_lastname(database, memberId){
+def get_lastname(database, memberId):
     query = "SELECT last_name FROM user WHERE memberId=?"
     connection = sq.connect(database)
     cursor = connection.cursor()
@@ -157,9 +157,9 @@ def get_lastname(database, memberId){
     connection.close()
 
     return  rows[0][0]
-}
 
-def get_address(database, memberId){
+
+def get_address(database, memberId):
     query = "SELECT address FROM user WHERE memberId=?"
     connection = sq.connect(database)
     cursor = connection.cursor()
@@ -168,9 +168,9 @@ def get_address(database, memberId){
     connection.close()
 
     return  rows[0][0]
-}
 
-def get_username(database, memberId){
+
+def get_username(database, memberId):
     query = "SELECT username FROM user WHERE memberId=?"
     connection = sq.connect(database)
     cursor = connection.cursor()
@@ -179,9 +179,9 @@ def get_username(database, memberId){
     connection.close()
 
     return  rows[0][0]
-}
 
-def get_phonenumber(database, memberId){
+
+def get_phonenumber(database, memberId):
     query = "SELECT phone_number FROM user WHERE memberId=?"
     connection = sq.connect(database)
     cursor = connection.cursor()
@@ -190,9 +190,9 @@ def get_phonenumber(database, memberId){
     connection.close()
 
     return  rows[0][0]
-}
 
-def get_age(database, memberId){
+
+def get_age(database, memberId):
     query = "SELECT age FROM user WHERE memberId=?"
     connection = sq.connect(database)
     cursor = connection.cursor()
@@ -201,11 +201,9 @@ def get_age(database, memberId){
     connection.close()
 
     return  rows[0][0]
-}
+
 
 if __name__ == "__main__":
 
     r = get_information('Database/database.db')
-
-    for e in r:
-        print(e)
+    

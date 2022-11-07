@@ -5,7 +5,7 @@ import sqlite3
 from Database import MemberDB
 
 """
-
+Class for the creation of members, members get added to a database
 """
 
 

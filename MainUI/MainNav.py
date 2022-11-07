@@ -11,7 +11,7 @@ different key users will have different functionality (admin, customers)
 
 from MemberManagement.MemberManagementUI import MemberManagementUI
 from GymBookings.GymBookingsUI import GymBookingsUI
-
+from MemberManagement.SearchMember import SearchMember
 
 class MainNav(tk.Frame):
 
@@ -28,6 +28,6 @@ class MainNav(tk.Frame):
         new_booking.pack()
 
         # Button to bring up member info to potentially edit or just lookup
-        search_member = tk.Button(self, text="Search Member", command=lambda: root.chane_page(SearchMember))
+        search_member = tk.Button(self, text="Search Member", command=lambda: root.change_page(SearchMember))
         search_member.pack()
 

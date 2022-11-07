@@ -23,13 +23,18 @@ class SearchMember(tk.Frame):
     pn_selected = False
     address_selected = False
 
+    # for the returned search spec of members
+    listbox = None
+
     def __init__(self, root):
         tk.Frame.__init__(self, root)
         root.title("Search Member")
 
         heading = tk.Label(self, text="Member Inquiry")
-        heading.grid(row=0, rowspan=2, column=0, columnspan=2, pady=20, padx=40)
-        heading.focus()
+        heading.grid(row=0, rowspan=2, column=0, columnspan=4, pady=20, padx=40, sticky="we")
+
+        self.listbox = tk.Listbox(self, width=67)
+
 
         # Entry fields
         self.first_name = tk.Entry(self)
@@ -53,8 +58,12 @@ class SearchMember(tk.Frame):
         self.address.bind("<FocusIn>", self.delete_addy_entry)
 
         back = tk.Button(self, text="Back", command=root.go_main_nav)
-        clear = tk.Button(self, text="Reset", command=self.clear_searches)
-        search = tk.Button(self, text="Search", command=self.search_member)
+        clear = tk.Button(self, text="Reset", width=5, command=self.clear_searches)
+        search = tk.Button(self, text="Search", width=5, command=self.search_member)
+        edit = tk.Button(self, text="Edit", width=5, command=self.edit_member)
+        delete = tk.Button(self, text="Delete", width=5, command=self.delete_selected_member)
+
+
 
         # The grid layout
         self.first_name.grid(row=3, column=0, padx=5, pady=5)
@@ -62,11 +71,20 @@ class SearchMember(tk.Frame):
         self.phone_number.grid(row=3, column=2, padx=5,pady=5)
         self.email.grid(row=4, column=0, padx=5, pady=5)
         self.address.grid(row=4, column=1, padx=5,pady=5)
-        search.grid(row=3, column=3, padx=10)
-        clear.grid(row=4, column=3, padx=10)
-        back.grid(row=5, column=0, pady=10, padx=10, sticky="w")
+        search.grid(row=3, column=3, padx=5, sticky="w")
+        clear.grid(row=4, column=3, padx=5, sticky="w")
+        edit.grid(row=13, column=3, padx=5, sticky="sw")
+        delete.grid(row=14, column=3, padx=5, sticky="sw")
+        back.grid(row=15, column=0, pady=10, padx=10, sticky="w")
+        self.listbox.grid(row=5, column=0, columnspan=4, rowspan=10, padx=5, sticky="w")
 
     def search_member(self):
+        pass
+
+    def edit_member(self):
+        pass
+
+    def delete_selected_member(self):
         pass
 
     # Just for effects, deletes text in entry form if selected (the first time or after clear)
@@ -112,3 +130,4 @@ class SearchMember(tk.Frame):
         self.address.delete(0, 'end')
         self.address.insert(0, "Address...")
         self.address_selected = False
+        self.listbox.delete(0, 'end')

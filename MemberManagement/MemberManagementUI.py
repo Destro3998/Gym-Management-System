@@ -2,6 +2,8 @@
 
 import tkinter as tk
 import sqlite3
+from tkinter.messagebox import showinfo
+
 from Database import MemberDB
 
 """
@@ -10,11 +12,11 @@ Class for the creation of members, members get added to a database
 
 
 class MemberManagementUI(tk.Frame):
-    first_name = ""
-    last_name = ""
-    email = ""
-    number = 0
-    address = ""
+    first_name = None
+    last_name = None
+    email = None
+    number = None
+    address = None
     MemberDB = MemberDB.MemberDB()
 
     def __init__(self, root):
@@ -65,30 +67,46 @@ class MemberManagementUI(tk.Frame):
     # Function opens db, adds entry forms to db then closes the db and
     # deletes the forms on the GUI
     def create(self):
-        conn = sqlite3.connect("members.db")
-        cur = conn.cursor()
 
-        # Insert entries into the table
-        cur.execute("INSERT INTO members VALUES (:first_name, :last_name, :email, :number, :address)",
-                    {
-                        'first_name': self.first_name.get(),
-                        'last_name': self.last_name.get(),
-                        'email': self.email.get(),
-                        'number': self.email.get(),
-                        'address': self.address.get()})
+        # if any of the input fields are empty print message
+        if not [x for x in (self.first_name, self.last_name, self.email, self.address, self.number) if x is None]:
+            showinfo("Missing Items", "Error \nPlease make sure you fill out all required fields")
+        elif not self.validate_f_name():
+            showinfo("Incorrect Format", "First name must be < 30 characters and not contain any numbers or symbols")
+        elif not self.validate_l_name():
+            showinfo("Incorrect Format", "Last name must be < 30 characters and not contain any numbers or symbols")
+        elif not self.validate_email():
+            showinfo("Incorrect Format", "Not a valid email, must be in abc123@abs123 format")
+        elif not self.validate_number():
+            showinfo("Incorrect Format", "Not a valid phone number, must only contain numbers and be 10 numbers long")
+        elif not self.validate_address():
+            showinfo("Incorrect format", "Address must not contain any symbols, only numbers and letters")
+        else:
 
-        conn.commit()
+            conn = sqlite3.connect("members.db")
+            cur = conn.cursor()
 
-        conn.close()
+            # Insert entries into the table
+            cur.execute("INSERT INTO members VALUES (:first_name, :last_name, :email, :number, :address)",
+                        {
+                            'first_name': self.first_name.get(),
+                            'last_name': self.last_name.get(),
+                            'email': self.email.get(),
+                            'number': self.email.get(),
+                            'address': self.address.get()})
 
-        # Delete the entries once the create button gets pressed
+            conn.commit()
 
-        self.first_name.delete(0, tk.END)
-        self.last_name.delete(0, tk.END)
-        self.email.delete(0, tk.END)
-        self.number.delete(0, tk.END)
-        self.address.delete(0, tk.END)
-        self.show_db()
+            conn.close()
+
+            # Delete the entries once the create button gets pressed
+
+            self.first_name.delete(0, tk.END)
+            self.last_name.delete(0, tk.END)
+            self.email.delete(0, tk.END)
+            self.number.delete(0, tk.END)
+            self.address.delete(0, tk.END)
+
 
     # For testing purposes, data will show upon exiting the application
     def show_db(self):
@@ -98,3 +116,18 @@ class MemberManagementUI(tk.Frame):
         cur.execute("SELECT *, oid FROM members")
         entries = cur.fetchall()
         print(entries)
+
+    def validate_f_name(self):
+        return True
+
+    def validate_l_name(self):
+        return True
+
+    def validate_email(self):
+        return True
+
+    def validate_address(self):
+        return True
+
+    def validate_number(self):
+        return True

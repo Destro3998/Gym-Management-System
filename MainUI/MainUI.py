@@ -6,6 +6,8 @@ This will serve as the main container for all of the UI's/Different pages
 """
 import tkinter as tk
 from LoginPage import LoginPage
+from MainNav import MainNav
+from MemberManagement import MemberManagementUI
 
 
 class MainUI(tk.Tk):
@@ -26,7 +28,12 @@ class MainUI(tk.Tk):
         # set new page and pack it into root container
         self.page = cur_page
         self.page.pack()
-        # self.title = title
+
+    def go_main_nav(self):
+        if self.page is not None:
+            self.page.destroy()
+        self.page = MainNav(self)
+        self.page.pack()
 
 
 if __name__ == "__main__":

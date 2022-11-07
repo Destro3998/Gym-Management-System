@@ -32,6 +32,9 @@ class GymBookingsUI(tk.Frame):
         # Title label for page
         title = tk.Label(self, text="Book A Class")
 
+        # Button for backwards navigation
+        back = tk.Button(self, text="Back", command=root.go_main_nav)
+
         # place everything in a grid for organization and view
 
         title.grid(row=0, column=0, columnspan=2, pady=30)
@@ -47,6 +50,8 @@ class GymBookingsUI(tk.Frame):
         l_time1.grid(row=2, column=1, padx=5)
         l_time2.grid(row=3, column=1, padx=5)
         l_time3.grid(row=4, column=1, padx=5)
+
+        back.grid(row=5, column=0, padx=5, pady=10)
 
         # fix later to automate
         def popup_signup1():
@@ -144,3 +149,4 @@ class GymBookingsUI(tk.Frame):
 
         withdraw3 = tk.Button(self, text="Withdraw", command=popup_withdraw3)
         withdraw3.grid(row=4, column=3)
+

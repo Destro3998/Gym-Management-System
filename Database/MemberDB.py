@@ -1,7 +1,10 @@
 # Damon Dix
 
 import sqlite3
-
+"""
+Class for creating database, should only need to happen once, mostly for testing
+purposes once initially create
+"""
 
 class MemberDB:
 

@@ -42,7 +42,7 @@ class MemberManagementUI(tk.Frame):
 
         # Button to add member to Dtbf.create(self)
         create = tk.Button(self, text="Create", command=self.create)
-        back = tk.Button(self, text="Back")
+        back = tk.Button(self, text="Back", command=root.go_main_nav)
 
         # place everything in a grid for organization and view
 
@@ -62,6 +62,8 @@ class MemberManagementUI(tk.Frame):
         create.grid(row=6, column=1, columnspan=2, pady=15)
         back.grid(row=6, column=0, pady=15)
 
+    # Function opens db, adds entry forms to db then closes the db and
+    # deletes the forms on the GUI
     def create(self):
         conn = sqlite3.connect("members.db")
         cur = conn.cursor()
@@ -88,6 +90,7 @@ class MemberManagementUI(tk.Frame):
         self.address.delete(0, tk.END)
         self.show_db()
 
+    # For testing purposes, data will show upon exiting the application
     def show_db(self):
         conn = sqlite3.connect('members.db')
         cur = conn.cursor()

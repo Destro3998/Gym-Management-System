@@ -26,3 +26,8 @@ class MainNav(tk.Frame):
         # gym bookings button to navigate to the page to add a new member
         new_booking = tk.Button(self, text="Class Sign Up", command=lambda: root.change_page(GymBookingsUI))
         new_booking.pack()
+
+        # Button to bring up member info to potentially edit or just lookup
+        search_member = tk.Button(self, text="Search Member", command=lambda: root.chane_page(SearchMember))
+        search_member.pack()
+

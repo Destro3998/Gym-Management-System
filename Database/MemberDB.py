@@ -22,6 +22,5 @@ class MemberDB:
 
 
         # conn.commit()
-
-
+        self.conn.close()
 

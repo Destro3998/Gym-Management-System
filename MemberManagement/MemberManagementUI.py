@@ -1,5 +1,5 @@
 # Damon Dix
-
+import re
 import tkinter as tk
 import sqlite3
 from tkinter.messagebox import showinfo
@@ -18,6 +18,12 @@ class MemberManagementUI(tk.Frame):
     number = None
     address = None
     MemberDB = MemberDB.MemberDB()
+
+    # for validating form entry values
+    name_regex = re.compile('[^a-zA-Z]+')
+    email_regex = re.compile(r'\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Z|a-z]{2,}\b')
+    address_regex = re.compile('[^0-9a-zA-z ]+')
+    number_regex = re.compile('[^0-9]+')
 
     def __init__(self, root):
         tk.Frame.__init__(self, root)
@@ -69,14 +75,16 @@ class MemberManagementUI(tk.Frame):
     def create(self):
 
         # if any of the input fields are empty print message
-        if not [x for x in (self.first_name, self.last_name, self.email, self.address, self.number) if x is None]:
+        if [x for x in (self.first_name, self.last_name, self.email, self.address, self.number) if x is None]:
             showinfo("Missing Items", "Error \nPlease make sure you fill out all required fields")
         elif not self.validate_f_name():
-            showinfo("Incorrect Format", "First name must be < 30 characters and not contain any numbers or symbols")
+            showinfo("Incorrect Format", "First name must be < 20 characters and not contain any numbers, symbols or "
+                                         "spaces")
         elif not self.validate_l_name():
-            showinfo("Incorrect Format", "Last name must be < 30 characters and not contain any numbers or symbols")
+            showinfo("Incorrect Format", "Last name must be < 30 characters and not contain any numbers, symbols or "
+                                         "spaces")
         elif not self.validate_email():
-            showinfo("Incorrect Format", "Not a valid email, must be in abc123@abs123 format")
+            showinfo("Incorrect Format", "Not a valid email, must be in abc123@abs123.abd format")
         elif not self.validate_number():
             showinfo("Incorrect Format", "Not a valid phone number, must only contain numbers and be 10 numbers long")
         elif not self.validate_address():
@@ -85,6 +93,9 @@ class MemberManagementUI(tk.Frame):
 
             conn = sqlite3.connect("members.db")
             cur = conn.cursor()
+            print("whoops added")
+            val = self.validate_email()
+            # print (str(val))
 
             # Insert entries into the table
             cur.execute("INSERT INTO members VALUES (:first_name, :last_name, :email, :number, :address)",
@@ -107,27 +118,39 @@ class MemberManagementUI(tk.Frame):
             self.number.delete(0, tk.END)
             self.address.delete(0, tk.END)
 
-
-    # For testing purposes, data will show upon exiting the application
-    def show_db(self):
-        conn = sqlite3.connect('members.db')
-        cur = conn.cursor()
-
-        cur.execute("SELECT *, oid FROM members")
-        entries = cur.fetchall()
-        print(entries)
-
+    # validation functions fo entries
     def validate_f_name(self):
-        return True
+        if len(self.first_name.get()) > 20:
+            return False
+        elif self.name_regex.search(self.first_name.get()):
+            return False
+        else:
+            return True
 
     def validate_l_name(self):
-        return True
+        if len(self.last_name.get()) > 20:
+            return False
+        elif self.name_regex.search(self.last_name.get()):
+            return False
+        else:
+            return True
 
     def validate_email(self):
-        return True
+        if not self.email_regex.search(self.email.get()):
+            return False
+        else:
+            return True
 
     def validate_address(self):
-        return True
+        if self.address_regex.search(self.address.get()):
+            return False
+        else:
+            return True
 
     def validate_number(self):
-        return True
+        if len(self.number.get()) != 10:
+            return False
+        elif self.number_regex.search(self.number.get()):
+            return False
+        else:
+            return True

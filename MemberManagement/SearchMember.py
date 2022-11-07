@@ -53,7 +53,7 @@ class SearchMember(tk.Frame):
         self.address.bind("<FocusIn>", self.delete_addy_entry)
 
         back = tk.Button(self, text="Back", command=root.go_main_nav)
-        clear = tk.Button(self, text="Clear", command=self.clear_search)
+        clear = tk.Button(self, text="Reset", command=self.clear_searches)
         search = tk.Button(self, text="Search", command=self.search_member)
 
         # The grid layout
@@ -66,14 +66,10 @@ class SearchMember(tk.Frame):
         clear.grid(row=4, column=3, padx=10)
         back.grid(row=5, column=0, pady=10, padx=10, sticky="w")
 
-
-    def clear_search(self):
-        pass
-
     def search_member(self):
         pass
 
-    # Just for effects, deletes text in entry form if selected (the first time
+    # Just for effects, deletes text in entry form if selected (the first time or after clear)
     def delete_fn_entry(self, event):
         if not self.fn_selected:
             self.fn_selected = True
@@ -98,3 +94,21 @@ class SearchMember(tk.Frame):
         if not self.address_selected:
             self.address_selected = True
             self.address.delete(0, 'end')
+
+    # Reset search and selection variables so they dissappear when you click on them again
+    def clear_searches(self):
+        self.first_name.delete(0, 'end')
+        self.first_name.insert(0,"First Name...")
+        self.fn_selected = False
+        self.last_name.delete(0, 'end')
+        self.last_name.insert(0, "Last Name...")
+        self.ln_selected = False
+        self.email.delete(0, 'end')
+        self.email.insert(0, "Email...")
+        self.email_selected = False
+        self.phone_number.delete(0, 'end')
+        self.phone_number.insert(0, "Phone Number...")
+        self.pn_selected = False
+        self.address.delete(0, 'end')
+        self.address.insert(0, "Address...")
+        self.address_selected = False

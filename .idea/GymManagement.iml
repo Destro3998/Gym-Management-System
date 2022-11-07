@@ -5,10 +5,14 @@
       <excludeFolder url="file://$MODULE_DIR$/venv" />
     </content>
 <<<<<<< HEAD
+<<<<<<< HEAD
     <orderEntry type="inheritedJdk" />
 =======
     <orderEntry type="jdk" jdkName="Python 3.10 (maxie)" jdkType="Python SDK" />
 >>>>>>> GymBookings
+=======
+    <orderEntry type="inheritedJdk" />
+>>>>>>> MembyManagement
     <orderEntry type="sourceFolder" forTests="false" />
   </component>
 </module>

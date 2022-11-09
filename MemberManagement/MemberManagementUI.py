@@ -1,10 +1,12 @@
 # Damon Dix
 import re
 import tkinter as tk
-import sqlite3
+
+
 from tkinter.messagebox import showinfo
 
 from Database.MemberDB import MemberDB
+
 
 """
 Class for the creation of members, members get added to a database
@@ -69,7 +71,7 @@ class MemberManagementUI(tk.Frame):
         self.address.grid(row=5, column=1, padx=5)
 
         create.grid(row=6, column=1, columnspan=2, pady=15)
-        back.grid(row=6, column=0, pady=15)
+        back.grid(row=6, column=0, padx=5, pady=15, sticky="ns")
 
     # Function opens db, adds entry forms to db then closes the db and
     # deletes the forms on the GUI
@@ -92,24 +94,8 @@ class MemberManagementUI(tk.Frame):
             showinfo("Incorrect format", "Address must not contain any symbols, only numbers and letters")
         else:
 
-            conn = sqlite3.connect("members.db")
-            cur = conn.cursor()
-            print("whoops added")
-            val = self.validate_email()
-            # print (str(val))
-
-            # Insert entries into the table
-            cur.execute("INSERT INTO members VALUES (:first_name, :last_name, :email, :number, :address)",
-                        {
-                            'first_name': self.first_name.get(),
-                            'last_name': self.last_name.get(),
-                            'email': self.email.get(),
-                            'number': self.email.get(),
-                            'address': self.address.get()})
-
-            conn.commit()
-
-            conn.close()
+            MemberDB.add_member(self.first_name.get(), self.last_name.get(), self.email.get(), self.address.get(),
+                                self.number.get())
 
             # Delete the entries once the create button gets pressed
 
@@ -118,6 +104,8 @@ class MemberManagementUI(tk.Frame):
             self.email.delete(0, tk.END)
             self.number.delete(0, tk.END)
             self.address.delete(0, tk.END)
+
+            showinfo("Added", "Successfully Added Member")
 
     # validation functions fo entries
     def validate_f_name(self):

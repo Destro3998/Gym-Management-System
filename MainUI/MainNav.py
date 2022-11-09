@@ -10,10 +10,10 @@ different key users will have different functionality (admin, customers)
 # Imports for different page navigation's
 from MemberManagement.MemberManagementUI import MemberManagementUI
 from GymBookings.GymBookingsUI import GymBookingsUI
+from MemberManagement.SearchMember import SearchMember
 
 
 class MainNav(tk.Frame):
-
 
     def __init__(self, root):
         tk.Frame.__init__(self, root)

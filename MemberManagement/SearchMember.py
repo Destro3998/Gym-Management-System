@@ -1,9 +1,11 @@
 # Damon Dix
 
 import tkinter as tk
-
+import sqlite3
+import Database
 """
-Class is used to search through the 
+Class for searching through the database, accessing member profiles and either 
+editing them or deleting theme, or to just show them in the visual view of the gui
 """
 
 
@@ -77,8 +79,18 @@ class SearchMember(tk.Frame):
         delete.grid(row=14, column=3, padx=5, sticky="sw")
         back.grid(row=15, column=0, pady=10, padx=10, sticky="w")
         self.listbox.grid(row=5, column=0, columnspan=4, rowspan=10, padx=5, sticky="w")
+        self.search_member()
 
     def search_member(self):
+        # step one get the entire database, for the scope of this project this is fine
+        conn = sqlite3.connect('Database/members.db')
+        cur = conn.cursor()
+        cur.execute('SELECT * FROM members.db')
+        members = cur.fetchall()
+
+        for x in members:
+            print(x)
+        conn.close()
         pass
 
     def edit_member(self):

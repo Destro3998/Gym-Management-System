@@ -1,8 +1,9 @@
 # Damon Dix
-
+import itertools
 import tkinter as tk
 import sqlite3
-import Database
+from tkinter.messagebox import showinfo
+
 """
 Class for searching through the database, accessing member profiles and either 
 editing them or deleting theme, or to just show them in the visual view of the gui
@@ -10,11 +11,12 @@ editing them or deleting theme, or to just show them in the visual view of the g
 
 
 class SearchMember(tk.Frame):
-    first_name = ""
-    last_name = ""
-    email = ""
-    phone_number = ""
-    address = ""
+    first_name = None
+    last_name = None
+    email = None
+    phone_number = None
+    address = None
+    id = None
 
     # placeholder boolean to check whether text entry have been selected once or not
     # upon first selection, default text is deleted, and you're able to enter
@@ -36,7 +38,6 @@ class SearchMember(tk.Frame):
         heading.grid(row=0, rowspan=2, column=0, columnspan=4, pady=20, padx=40, sticky="we")
 
         self.listbox = tk.Listbox(self, width=67)
-
 
         # Entry fields
         self.first_name = tk.Entry(self)
@@ -65,35 +66,65 @@ class SearchMember(tk.Frame):
         edit = tk.Button(self, text="Edit", width=5, command=self.edit_member)
         delete = tk.Button(self, text="Delete", width=5, command=self.delete_selected_member)
 
-
-
         # The grid layout
         self.first_name.grid(row=3, column=0, padx=5, pady=5)
         self.last_name.grid(row=3, column=1, padx=5, pady=5)
-        self.phone_number.grid(row=3, column=2, padx=5,pady=5)
+        self.phone_number.grid(row=3, column=2, padx=5, pady=5)
         self.email.grid(row=4, column=0, padx=5, pady=5)
-        self.address.grid(row=4, column=1, padx=5,pady=5)
+        self.address.grid(row=4, column=1, padx=5, pady=5)
         search.grid(row=3, column=3, padx=5, sticky="w")
         clear.grid(row=4, column=3, padx=5, sticky="w")
         edit.grid(row=13, column=3, padx=5, sticky="sw")
         delete.grid(row=14, column=3, padx=5, sticky="sw")
         back.grid(row=15, column=0, pady=10, padx=10, sticky="w")
         self.listbox.grid(row=5, column=0, columnspan=4, rowspan=10, padx=5, sticky="w")
-        self.search_member()
 
     def search_member(self):
         # step one get the entire database, for the scope of this project this is fine
-        conn = sqlite3.connect('Database/members.db')
+        conn = sqlite3.connect('members.db')
         cur = conn.cursor()
-        cur.execute('SELECT * FROM members.db')
+        cur.execute('SELECT * FROM members')
         members = cur.fetchall()
+        matches = []  # list to hold matches from search query
 
+        # iterate through members adding any matches that line up with the multiple
+        # possible search specs, delete matches from members so no double entries
         for x in members:
-            print(x)
-        conn.close()
-        pass
+            if self.first_name.get() is not None:
+                if self.first_name.get() in x:
+                    matches.append(" ".join(str(i) for i in x))
+                    members.remove(x)
+            if self.last_name.get() is not None:
+                if self.last_name.get() in x:
+                    matches.append(" ".join(str(i) for i in x))
+                    members.remove(x)
+            if self.email.get() is not None:
+                if self.email.get() in x:
+                    matches.append(" ".join(str(i) for i in x))
+                    members.remove(x)
+            if self.address.get() is not None:
+                if self.address.get() in x:
+                    matches.append(" ".join(str(i) for i in x))
+                    members.remove(x)
+            if self.phone_number.get() is not None:
+                if self.phone_number.get() in x:
+                    matches.append(" ".join(str(i) for i in x))
+                    members.remove(x)
+    
+        # No matches are found, search again
+        if not matches:
+            showinfo("Error", "No Matches Found, Search Again")
+        else:
+            for x in matches:
+                entry = x[:-36]
+                self.listbox.insert('end', entry)
+
+
 
     def edit_member(self):
+        for i in self.listbox.curselection():
+            print(self.listbox.get(i))
+        #print (self.listbox.get(self.listbox.curselection()))
         pass
 
     def delete_selected_member(self):
@@ -128,7 +159,7 @@ class SearchMember(tk.Frame):
     # Reset search and selection variables so they dissappear when you click on them again
     def clear_searches(self):
         self.first_name.delete(0, 'end')
-        self.first_name.insert(0,"First Name...")
+        self.first_name.insert(0, "First Name...")
         self.fn_selected = False
         self.last_name.delete(0, 'end')
         self.last_name.insert(0, "Last Name...")

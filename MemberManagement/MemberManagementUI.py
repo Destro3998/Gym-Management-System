@@ -1,7 +1,8 @@
 # Damon Dix
 import re
+import sqlite3
 import tkinter as tk
-
+import uuid
 
 from tkinter.messagebox import showinfo
 
@@ -20,6 +21,7 @@ class MemberManagementUI(tk.Frame):
     email = None
     number = None
     address = None
+    id = None
     MemberDB = MemberDB()
 
     # for validating form entry values
@@ -73,10 +75,20 @@ class MemberManagementUI(tk.Frame):
         create.grid(row=6, column=1, columnspan=2, pady=15)
         back.grid(row=6, column=0, padx=5, pady=15, sticky="ns")
 
+    # Generate a random id, double check that it's not already generated
+    # regenerate if it already exists
+    def generate_id(self):
+        self.id = str(uuid.uuid4())
+        if not self.validate_id(self.id):
+            self.generate_id()
+        else:
+            pass
+
     # Function opens db, adds entry forms to db then closes the db and
     # deletes the forms on the GUI
     def create(self):
 
+        self.generate_id()
         # if any of the input fields are empty print message
         if [x for x in (self.first_name, self.last_name, self.email, self.address, self.number) if x is None]:
             showinfo("Missing Items", "Error \nPlease make sure you fill out all required fields")
@@ -95,7 +107,7 @@ class MemberManagementUI(tk.Frame):
         else:
 
             MemberDB.add_member(self.first_name.get(), self.last_name.get(), self.email.get(), self.address.get(),
-                                self.number.get())
+                                self.number.get(), self.id)
 
             # Delete the entries once the create button gets pressed
 
@@ -143,3 +155,16 @@ class MemberManagementUI(tk.Frame):
             return False
         else:
             return True
+
+    # function used to double-check whether an id has been assigned already or not
+    # function return false if id already exists true if it's a valid id
+    def validate_id(self, mem_id):
+        conn = sqlite3.connect("members.db")
+        cur = conn.cursor()
+        cur.execute('SELECT * FROM members')
+        members = cur.fetchall()
+        for x in members:
+            if mem_id in x:
+                return False
+            else:
+                return True

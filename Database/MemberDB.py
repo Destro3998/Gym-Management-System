@@ -19,7 +19,8 @@ class MemberDB:
             last_name text,
             email text,
             phone_number text,
-            address text )
+            address text,
+            id text)
          """)
 
         self.conn.commit()
@@ -30,12 +31,12 @@ class MemberDB:
     is important
     """
     @staticmethod
-    def add_member(fname, lname, email, address, number):
+    def add_member(fname, lname, email, address, number, id):
         conn = sqlite3.connect("members.db")
         cur = conn.cursor()
-        member = [fname, lname, email, number, address]
-        cur.executemany("""INSERT INTO members (first_name, last_name, email, phone_number, address)
-        Values(?,?,?,?,?)""", [member],)
+        member = [fname, lname, email, number, address, id]
+        cur.executemany("""INSERT INTO members (first_name, last_name, email, phone_number, address, id)
+        Values(?,?,?,?,?,?)""", [member],)
 
         conn.commit()
         conn.close()

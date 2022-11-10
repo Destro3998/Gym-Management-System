@@ -110,7 +110,7 @@ class SearchMember(tk.Frame):
                 if self.phone_number.get() in x:
                     matches.append(" ".join(str(i) for i in x))
                     members.remove(x)
-    
+
         # No matches are found, search again
         if not matches:
             showinfo("Error", "No Matches Found, Search Again")

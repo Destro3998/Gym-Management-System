@@ -24,8 +24,3 @@ bookings.append( BasicBooking('0400', 'Pilates', 'Tues, 7:00PM - 8:00AM') )
 bookings.append( BasicBooking('0401', 'Pilates', 'Thurs, 7:00PM - 8:00AM') )
 bookings.append( BasicBooking('0402', 'Pilates', 'Tues, 11:15AM - 12:15PM') )
 bookings.append( BasicBooking('0403', 'Pilates', 'Thurs, 11:15AM - 12:15PM') )
-
-for x in bookings:
-    print(x.class_name + " = " + x.class_timeslot)
-
-print(len(bookings))

@@ -107,8 +107,6 @@ class GymBookingsUI(tk.Frame):
 
         # setup if condition for when class is already booked
         if record[10].find('[' + self.classID.get() + ']') != -1:
-            print(record[10])
-            print('[' + self.classID.get() + ']')
             connection_obj.close()
             showinfo("Unuccessful!", "Already Signed Up to Class!")
             return
@@ -155,8 +153,6 @@ class GymBookingsUI(tk.Frame):
 
         # setup if condition for when class is not signed up to
         if record[10].find('[' + self.classID.get() + ']') == -1:
-            print(record[10])
-            print('[' + self.classID.get() + ']')
             connection_obj.close()
             showinfo("Unuccessful!", "Not Signed Up to Class!")
             return
